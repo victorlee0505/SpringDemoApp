@@ -1,13 +1,8 @@
 package com.example.demo.Security;
 
-import java.util.HashMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
@@ -39,8 +34,9 @@ public class AuthController {
         params.add("audience", audience);
         params.add("grant_type", "client_credentials");
 
-        // HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(params,
-        //         headers);
+        // HttpEntity<MultiValueMap<String, String>> entity = new
+        // HttpEntity<MultiValueMap<String, String>>(params,
+        // headers);
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Auth0Token> result = restTemplate.postForEntity(tokenUrl, params, Auth0Token.class);

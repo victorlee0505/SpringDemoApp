@@ -28,5 +28,8 @@
             <AppenderRef ref="STDOUT" />
             <AppenderRef ref="DAILY_LOG" />
         </Root>
+
+        <logger name="org.springframework.boot.autoconfigure.logging"           level="info" />
+        
     </Loggers>
 </Configuration>

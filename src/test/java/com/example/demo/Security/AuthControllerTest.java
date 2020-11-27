@@ -6,6 +6,13 @@ import static com.example.demo.TestUtil.TestUtil.printEnd;
 import static com.example.demo.TestUtil.TestUtil.printStart;
 import static org.junit.Assert.assertTrue;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,7 +29,7 @@ public class AuthControllerTest {
     private static final Logger LOG = LoggerFactory.getLogger(AuthControllerTest.class);
 
     @Autowired
-    private AuthController authController;
+    private Auth0TokenService tokenService;
 
     @BeforeClass
     public static void classStart() {
@@ -36,10 +43,49 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void testToken(){
+    public void testToken() {
         printStart();
-        String token = authController.getManagementApiToken();
-        assertTrue(token.length()>0);
+        String token = tokenService.getManagementApiToken();
+        assertTrue(token.length() > 0);
+
+        try {
+            Thread.sleep(10000);
+            token = tokenService.getManagementApiToken();
+            assertTrue(token.length() > 0);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        printEnd();
+    }
+
+    @Test
+    public void testDecodeToken() {
+        printStart();
+        String token = tokenService.getManagementApiToken();
+        assertTrue(token.length() > 0);
+
+        DecodedJWT jwt = JWT.decode(token);
+
+        LOG.info("Token: {}", jwt.getAlgorithm());
+        LOG.info("Token: {}", jwt.getAudience());
+        LOG.info("Token: {}", jwt.getClaims());
+        LOG.info("Token: {}", jwt.getIssuedAt());
+        LOG.info("Token: {}", jwt.getExpiresAt());
+
+        printEnd();
+    }
+
+    @Test
+    public void testisTokenActive() {
+        printStart();
+
+        boolean result = tokenService.isTokenActive();
+
+        assertTrue(result);
+
+        
         printEnd();
     }
 }

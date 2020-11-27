@@ -34,7 +34,7 @@ public class Auth0TokenService {
 
     private Auth0Token token;
 
-    @PostConstruct
+    // @PostConstruct
     public void setup(){
         getManagementApiToken();
     }

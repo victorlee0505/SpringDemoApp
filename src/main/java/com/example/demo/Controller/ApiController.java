@@ -4,8 +4,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.demo.Security.Auth0TokenDecoder;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -149,15 +151,24 @@ public class ApiController {
             @ApiResponse(responseCode = "204", content = @Content(mediaType = "text/plain"), description = "204"),
             @ApiResponse(responseCode = "500", content = @Content(mediaType = "text/plain"), description = "500 Please try again. If error persist, contact administrator") })
     @SuppressWarnings("nls")
-    public String getAuth(@RequestHeader(value="Authorization") String token) {
+    public Map<String, Object> getAuth(@RequestHeader(value="Authorization") String token) {
 
         LOG.info("/api/auth Started");
 
-        LOG.info("token: {}", token);
+        Map<String, Object> result = new HashMap<>();
+
+        if(StringUtils.isNotBlank(token)){
+			Auth0TokenDecoder decoder = new Auth0TokenDecoder(token);
+		
+			result.put("audience", decoder.getAudience());
+			result.put("claim", decoder.getClaims());
+			result.put("issueAt", decoder.getIssuedAt());
+			result.put("expireAt", decoder.getExpiresAt());
+		}
 
         LOG.info("/api/auth Finished");
 
-        return token;
+        return result;
 
     }
 }

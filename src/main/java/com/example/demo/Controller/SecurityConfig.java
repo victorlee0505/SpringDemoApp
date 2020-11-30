@@ -47,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // You can ignore security filters if this is an issue for you, as discussed here:
                 // https://stackoverflow.com/questions/36296869/spring-security-permitall-still-considering-token-passed-in-authorization-header
                 .antMatchers("/api/greeting").permitAll()
-                .antMatchers("/api/greeting/get").authenticated();
+                .antMatchers("/api/greeting/get").authenticated()
+                .antMatchers("/api/auth").authenticated();
                 // .antMatchers(HttpMethod.GET, "/api/private").authenticated()
                 // .antMatchers(HttpMethod.GET, "/api/private-scoped").hasAuthority("read:messages");
     }

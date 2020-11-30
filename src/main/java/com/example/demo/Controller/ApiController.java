@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +26,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
  * Request Mapping to localhost:8080/api/greeting
  */
 @RestController
-@RequestMapping("/api/greeting")
+@RequestMapping("/api")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiController {
 
@@ -35,7 +36,7 @@ public class ApiController {
      * Default greeting as String
      * http://localhost:8080/api/greeting
      */
-    @GetMapping
+    @GetMapping(value = { "/greeting" }, produces = "application/json")
     @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation"),
             @ApiResponse(responseCode = "204", content = @Content(mediaType = "text/plain"), description = "204"),
             @ApiResponse(responseCode = "500", content = @Content(mediaType = "text/plain"), description = "500 Please try again. If error persist, contact administrator") })
@@ -57,7 +58,7 @@ public class ApiController {
      * http://localhost:8080/api/greeting/get
      * @return
      */
-    @GetMapping(value = { "/get" }, produces = "application/json")
+    @GetMapping(value = { "/greeting/get" }, produces = "application/json")
     @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation"),
             @ApiResponse(responseCode = "204", content = @Content(mediaType = "text/plain"), description = "204"),
             @ApiResponse(responseCode = "500", content = @Content(mediaType = "text/plain"), description = "500 Please try again. If error persist, contact administrator") })
@@ -93,7 +94,7 @@ public class ApiController {
      * http://localhost:8080/api/greeting/post
      * @return
      */
-    @PostMapping(value = { "/post" }, produces = "application/json")
+    @PostMapping(value = { "/greeting/post" }, produces = "application/json")
     @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation"),
                             @ApiResponse(responseCode = "204", content = @Content(mediaType = "text/plain"), description = "204"),
                             @ApiResponse(responseCode = "500", content = @Content(mediaType = "text/plain"), description = "500 Please try again. If error persist, contact administrator") 
@@ -137,5 +138,26 @@ public class ApiController {
 
         LOG.info("/api/greeting/post Finished");
         return resEnt;
+    }
+
+    /**
+     * Default greeting as String
+     * http://localhost:8080/api/greeting
+     */
+    @GetMapping(value = { "/auth" }, produces = "application/json")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation"),
+            @ApiResponse(responseCode = "204", content = @Content(mediaType = "text/plain"), description = "204"),
+            @ApiResponse(responseCode = "500", content = @Content(mediaType = "text/plain"), description = "500 Please try again. If error persist, contact administrator") })
+    @SuppressWarnings("nls")
+    public String getAuth(@RequestHeader(value="Authorization") String token) {
+
+        LOG.info("/api/auth Started");
+
+        LOG.info("token: {}", token);
+
+        LOG.info("/api/auth Finished");
+
+        return token;
+
     }
 }

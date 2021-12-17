@@ -27,7 +27,7 @@ public class Fibonacci {
     // Use Memo to get existing result from previous calculation
     public static int fibonacciDP(int term) {
         if (memo.get(term) == null) {
-            memo.put(term, fibonacci(term - 1) + fibonacci(term - 2));
+            memo.put(term, fibonacciDP(term - 1) + fibonacciDP(term - 2));
         }
 
         return memo.get(term);
@@ -68,13 +68,15 @@ public class Fibonacci {
 
     public static void main(String[] args) {
 
+        int term = 45;
+
         // SLOW
-        System.out.println(fibonacci(40));
+        System.out.println(fibonacci(term));
 
         // TOP DOWN RECUR
-        System.out.println(fibonacciTopDown(40));
+        System.out.println(fibonacciTopDown(term));
 
         // BOTTOM UP ITERA
-        System.out.println(fibonacciBottomUp(40));
+        System.out.println(fibonacciBottomUp(term));
     }
 }

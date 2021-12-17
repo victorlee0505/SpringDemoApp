@@ -1,5 +1,6 @@
 package com.example.demo.MiscAlg;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,13 +9,16 @@ public class MergeUnique {
     public static String[] uniqueNames(String[] names1, String[] names2) {
         Set<String> uniqueSet = new HashSet<String>();
 
-        for (String name : names1) {
-            uniqueSet.add(name);
-        }
+        uniqueSet.addAll(Arrays.asList(names1));
+        uniqueSet.addAll(Arrays.asList(names2));
 
-        for (String name : names2) {
-            uniqueSet.add(name);
-        }
+        // for (String name : names1) {
+        //     uniqueSet.add(name);
+        // }
+
+        // for (String name : names2) {
+        //     uniqueSet.add(name);
+        // }
 
         return uniqueSet.toArray(new String[0]);
     }
